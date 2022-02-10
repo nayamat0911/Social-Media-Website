@@ -1,0 +1,116 @@
+{% extends 'navbar.html' %}
+
+{% load static %}
+<!-- crispy_form block-->
+
+<!-- title block-->
+{% block title %}   
+    {{title}}
+{% endblock title %}
+
+<!-- css block-->
+{% block css_block %}
+    <style>
+
+    </style>
+
+{% endblock %}
+
+{% block content %}
+<center>    
+
+<br><br><br>
+{% if searching_all %}
+
+{% else %} 
+{% endif %}
+{% for user in result_item %}
+    <div class="row">
+        <div class="col-4">
+            {% if user.user_profile.profile_pic %}
+                
+            <img src="/media/{{user.user_profile.profile_pic}}" width="70px" height="70px" class="rounded-circle" alt="">
+               
+            {% else %}
+                
+            <img src="/media/abc.png" width="70px" height="70px"  class="rounded-circle" alt="">
+                
+            {% endif %}
+                
+        </div>
+        <div class="col-8">
+            {{user.username}}
+            <br>
+            <a href="{% url 'app_login:User__view' username=user.username %}" class="nav-link">
+                {{user.user_profile.full_name}}
+            </a>
+        </div>
+    </div>   
+    <br>
+    <br>
+{% endfor %}        
+
+<div class="row">
+    <div class="col-sm-8">
+        {% for author in following_listed %}
+            {% for post in author.following.post.all %}
+            <div style="border: 1px solid #ccc;" >
+                <div style="padding: 12px; text-align: left;" >
+                    {% if post.author.user_profile.profile_pic %}
+                
+                    <img src="/media/{{post.author.user_profile.profile_pic}}" width="40px" height="40px" class="rounded-circle" alt="">
+       
+                    {% else %}
+        
+                    <img src="/media/abc.png" width="40px" height="40px"  class="rounded-circle" alt="">
+        
+                    {% endif %}
+                    <a href="{% url 'app_login:User__view' username=post.author %}">{{post.author}}</a>
+                </div>
+                <p style="text-align: left; padding-left: 50px;">{{post.caption}}</p>
+                <img src="/media/{{post.image}}" width="90%" height="70%" alt="">
+                <div class="like_icon p-3" style="text-align:left ;" >
+                    
+                    {% if post.pk in liked_post_list %}
+                    <a href="{% url 'app_post:Unliked' pk=post.pk %}"><i class="fas fa-heart " style="font-size:30px; color: red;"></i></a>
+                    {% else %}
+                    <a href="{% url 'app_post:liked' pk=post.pk %}"><i class="far fa-heart" style="font-size:30px; "></i></a>               
+                    {% endif %}
+                    {{post.liked_post.count}} likes
+                </div>
+            </div>
+            
+            <br>
+            <br>
+            {% endfor %}
+        {% endfor %}
+    </div>
+    <div class="col-sm-4">
+        <div class="row">
+            <div class="col-sm-4" style="text-align: right;">
+                {% if user.user_profile.profile_pic %}
+                
+                <img src="/media/{{user.user_profile.profile_pic}}" width="65px" height="65px" class="rounded-circle"  alt="">
+   
+                {% else %}
+    
+                <img src="/media/abc.png" width="40px" height="40px"  class="rounded-circle" alt="">
+    
+                {% endif %}
+            </div>
+            <div class="col-sm-8" style="text-align: left; padding-top: 12px;">
+                {{user.user_profile.full_name}}
+            </div>
+        </div>
+
+    </div>
+</div>
+    
+
+    
+</center>
+
+{% endblock content %}
+
+
+

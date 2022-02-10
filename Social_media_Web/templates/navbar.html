@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <title>
+        {% block title %}
+            home
+        {% endblock title %}
+    </title>
+ 
+    {% block css_block %}
+
+    {% endblock %}
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm bg-light navbar-light"> 
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a href="{% url 'app_post:Home' %}" class="nav-link">Home</a>
+            </li>
+            &nbsp;&nbsp;&nbsp;
+            <form class="form-inline my-2 my-lg-0" method="GET">
+                <input class="form-control mr-sm-2" type="search" name="search_item" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            {% if user.is_authenticated %}
+            <li class="nav-item ">
+                <a href="{% url 'app_login:logout_page' %}" class="nav-link">logout</a>
+            </li>
+            <li class="nav-item ">
+                {% if user.user_profile.profile_pic %}
+                <a href="{% url 'app_login:User_Profile' %}" class="nav-link">
+                    <img src="/media/{{user.user_profile.profile_pic}}" width="35px" height="35px" class="rounded-circle" alt="">
+                </a>
+                {% else %}
+                <a href="{% url 'app_login:User_Profile' %}" class="nav-link">
+                    <img src="/media/abc.png" width="30px" height="30px"  class="rounded-circle" alt="">
+                </a>
+                {% endif %}
+            </li>
+            {% else %}
+            <li class="nav-item ">
+                <a href="{% url 'app_login:signup' %}" class="nav-link">Sign Up</a>
+            </li>
+            <li class="nav-item ">
+                <a href="{% url 'app_login:login_page' %}" class="nav-link">login</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    <div class="container">
+        <!-- <h3 style="text-align: center;">Home Page</h3> -->
+        {% block content %}
+            
+        {% endblock content %}
+    
+    
+    
+    </div>
+
+
+
+
+
+
+
+    <script src="{% static 'js/all.min.js' %}"></script>
+    <script src="{% static 'js/jQuery.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/propper.js' %}"></script>
+
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+</body>
+</html>

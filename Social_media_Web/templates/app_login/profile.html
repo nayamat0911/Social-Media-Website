@@ -1,0 +1,37 @@
+{% extends 'navbar.html' %}
+{% load static %}
+<!-- crispy_form block-->
+{% load crispy_forms_tags  %}
+
+<!-- title block-->
+{% block title %}   
+    {{title}}
+{% endblock title %}
+
+<!-- css block-->
+{% block css_block %}
+    <style>
+
+    </style>
+
+{% endblock %}
+
+{% block content %}
+<center>    
+    <div class="container">
+        <div class="Profile" >
+            <h3 style="text-align: center;">Profile Form</h3><hr>
+            <form method="POST" enctype="multipart/form-data" style="text-align: left; width: 600px;">
+                {% csrf_token %}
+                {{edti_form_|crispy }}
+                <button style="width: 100%;" class="btn btn-success" type="submit">Change</button>
+            </form>
+        </div>
+    </div><br><br><br><br>
+   
+</center>
+
+{% endblock content %}
+
+
+
